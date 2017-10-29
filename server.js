@@ -11,12 +11,19 @@ var start = headerOS.indexOf('(') + 1;
 var end = headerOS.indexOf(')');
 var system = headerOS.substring(start, end);
 
+
+var ip = req.headers['x-forwarded-for'] ||
+req.connection.remoteAddress ||
+req.socket.remoteAddress ||
+req.connection.socket.remoteAddress;
+
+
 res.send({
 
 
 
 
-  "ip-address": os.networkInterfaces().lo0[0].address,
+  "ip-address": ip,
   "language": req.headers['accept-language'].split(',')[0],
   "software": system
 });
